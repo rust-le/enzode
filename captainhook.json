@@ -1,0 +1,68 @@
+{
+    "commit-msg": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Beams",
+                "options": {
+                    "subjectLength": 50,
+                    "bodyLineLength": 72
+                }
+            }
+        ]
+    },
+    "pre-push": {
+        "enabled": false,
+        "actions": []
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting"
+            },
+            {
+                "action": "./vendor/bin/phpmd src ansi cleancode,codesize,controversial,design,naming,unusedcode"
+            },
+            {
+                "action": "./vendor/bin/phpcs --standard=psr12 src/ tests/Unit tests/Integration"
+            },
+            {
+                "action": "./vendor/bin/phpstan analyse src --level=7"
+            },
+            {
+                "action": "./vendor/bin/phpunit --testsuite Unit --configuration phpunit.xml.dist"
+            },
+            {
+                "action": "./vendor/bin/phpunit --testsuite Integration --configuration phpunit.xml.dist"
+            },
+            {
+                "action": "./vendor/bin/behat"
+            }
+        ]
+    },
+    "prepare-commit-msg": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-commit": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-merge": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-checkout": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-rewrite": {
+        "enabled": false,
+        "actions": []
+    },
+    "post-change": {
+        "enabled": false,
+        "actions": []
+    }
+}
