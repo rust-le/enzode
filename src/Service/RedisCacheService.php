@@ -87,6 +87,9 @@ class RedisCacheService implements CacheService
         );
 
         $serializedProducts = $this->redis->mget($cacheProductKeys);
+        if ($serializedProducts === false) {
+            $serializedProducts = [];
+        }
 
         $products = $this->deserializeCachedProducts($serializedProducts);
 
