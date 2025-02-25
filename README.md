@@ -1,3 +1,10 @@
+## Fixtures
+To load fixtures run:  
+
+```bin/console doctrine:fixtures:load```
+
+this will load 1k dummy products.
+
 Simply run:  
 
 ```app:create-user <email> <password> [<role>]```  
@@ -23,3 +30,46 @@ Then include token in headers:
 
 ``` Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJp...```
 
+## API Endpoints
+
+### ```GET``` /api/products
+### ```GET``` /api/products/report
+### ```POST``` /api/products
+example payload:
+```json
+{
+    "name": "Ziemniak",
+    "price": 181.99,
+    "description": "Smaczna rzecz",
+    "createdAt": "2025-02-20T16:54:55+00:00",
+    "currency": {
+        "code": "PLN"
+    },
+    "category": {
+        "name": "Warzywa"
+    },
+    "productAttributes": [
+        {
+            "attribute": {
+                "code": "ORG"
+            },
+            "value": "Pakistan"
+        },
+        {
+            "attribute": {
+                "code": "DAN"
+            },
+            "value": "Jadalne"
+        }
+    ]
+}
+```
+Succesful response with status code ```201```:
+```json
+{
+    "message": "Product created successfully",
+    "data": {
+        "id": "1056f083-f3fa-4f3e-9747-d477f546acc4"
+    }
+}
+```

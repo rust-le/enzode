@@ -103,6 +103,7 @@
     "require-dev": {
         "behat/behat": "^3.19",
         "captainhook/captainhook": "^5.25",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "fakerphp/faker": "^1.24",
         "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^2.1",
