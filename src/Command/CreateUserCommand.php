@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use function PHPUnit\Framework\isEmpty;
 
 
 #[AsCommand(
@@ -46,22 +47,38 @@ class CreateUserCommand extends Command
         $password = $input->getArgument('password');
         $role = $input->getArgument('role');
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $io->error('The email is not valid.');
+        if (!$this->validateEmail($email, $io)) {
             return Command::FAILURE;
         }
 
-        $user = new User();
-        $user->setEmail($email);
-        $user->setRoles([$role]);
-        $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
-        $user->setPassword($hashedPassword);
-
+        $user = $this->createUser($email, $password, $role);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $io->success('User successfully created! Email: ' . $email);
+        $io->success(sprintf('User successfully created! Email: %s', $email));
 
         return Command::SUCCESS;
+    }
+
+    private function validateEmail(string $email, SymfonyStyle $io): bool
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $io->error('The email is not valid.');
+            return false;
+        }
+
+        return true;
+    }
+
+    private function createUser(string $email, string $password, string $role): User
+    {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setRoles([$role]);
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
+        $user->setPassword($hashedPassword);
+
+        return $user;
     }
 }

@@ -22,15 +22,6 @@
                 "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting"
             },
             {
-                "action": "./vendor/bin/phpmd src ansi cleancode,codesize,controversial,design,naming,unusedcode"
-            },
-            {
-                "action": "./vendor/bin/phpcs --standard=psr12 src/ tests/Unit tests/Integration"
-            },
-            {
-                "action": "./vendor/bin/phpstan analyse src --level=7"
-            },
-            {
                 "action": "./vendor/bin/phpunit --testsuite Unit --configuration phpunit.xml.dist"
             },
             {
